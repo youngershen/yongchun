@@ -20,6 +20,24 @@ class HtmlNode(BaseNode):
         self.node_tag_parameters   = None
         self.node_tag_content      = None
 
+class BaseRender(object):
+    pass
+
+# <%= name %>
+# <% for i in range(10) %>
+#   <div id = "<%= i %>"> 
+#       <% print "test" %>
+#   </div>
+# <% endfor %>
+
+class TemplateRender(BaseRender):
+    
+    def __init__(self, html, data):
+        self.html = html
+        self.data = data
+
+
+
 class TemplateTagRender(object):
     #  "<% repeat 3 %> sfsdf <% endrepeat %>"
     reg_tag_parameters = r"[a-zA-Z0-9\s]+"
@@ -39,14 +57,17 @@ class TemplateTagRender(object):
         self.tag_start_token = contents[1]
         self.tag_end_token = contents[-2]
         self.content = contents[-4]
-        parameters_pattern = re.compile(self.reg_tag_parameters)
-        parameters_match   = re.search(parameters_pattern, ' '.join(contents[:-4]))
-        if parameters_match:
-            self.tag_parameters = parameters_match.group().strip()\
-                    .partition(self.tag_start_token)[2].strip().split()
-        else:
-            self.tag_parameters = None
 
+#        parameters_pattern = re.compile(self.reg_tag_parameters)
+#        parameters_match   = re.search(parameters_pattern, ' '.join(contents[:-4]))
+#        if parameters_match:
+#            self.tag_parameters = parameters_match.group().strip()\
+#                    .partition(self.tag_start_token)[2].strip().split()
+#        else:
+#            self.tag_parameters = None
+
+        self.tag_parameters = ' '.join(contents[2:-5])
+        print self.tag_parameters
         htmlnode = HtmlNode()
         htmlnode.node_tag_name = self.tag_name
         htmlnode.node_tag_start_token  = self.tag_start_token
@@ -71,7 +92,6 @@ class TemplateTagRender(object):
                 print e
         else:
             return ""
-                    
 
     def get_html_node(self):
         return self.htmlnode

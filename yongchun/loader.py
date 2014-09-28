@@ -40,26 +40,3 @@ class BaseLoader(object):
 class CommonLoader(BaseLoader):
     pass
 
-class DjangoLoader(BaseLoader):
-
-    def __init__(self, app_name = None):
-        if app_name:
-            self.app_name = app_name
-        self.init_django_settings()
-        super(DjangoLoader, self).__init__() 
-
-    def get_app_template_dirs(self):
-        pass
-
-class DjangoLoaderMixin(object):
-    
-    def init_django_settings(self):
-        try:
-            from django.conf import settings
-        except ImportError as e:
-            raise DjangoSettingsNotFoundError(app_name = self.app_name)
-        else:
-            self.django_settings = settings
-
-    def get_app_template_dirs(self):
-        pass

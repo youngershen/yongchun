@@ -10,7 +10,7 @@ from base   import Library
 class BaseParser(object):
     pass
 
-class HtmlParser(object):
+class TagParser(object):
 
     def __init__(self, content):
         if content:
@@ -68,11 +68,8 @@ def main():
         return "test repeat tag"
 
     html = open('test.html').read()
-    parser = HtmlParser(html)
+    parser = TagParser(html)
     nodes = parser.walk_nodes()
-    for i in nodes:
-        print i
-        print "==============================================================="
 
 if __name__ == '__main__':
     main()

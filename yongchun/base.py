@@ -40,7 +40,5 @@ def main():
     lib.get_library()
 
 if __name__ == '__main__':
-
-
     main()
 
